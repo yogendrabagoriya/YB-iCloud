@@ -23,8 +23,8 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
     var destinationURL : URL!
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTV.layer.borderColor = UIColor.darkGray.cgColor
-        descriptionTV.layer.borderWidth = 2.0
+        descriptionTV.layer.borderColor = UIColor.lightGray.cgColor
+        descriptionTV.layer.borderWidth = 1.0
         descriptionTV.layer.cornerRadius = 4.0
         recordArr = Array<CKRecord>()
     }
@@ -42,9 +42,9 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
         }
     }
     
-    @IBAction func uploadNote()
+    @IBAction func uploadNote(sender : UIButton)
     {
-        
+        self.uploadNote()
     }
     
     @IBAction func getNoteRecord(sender : UIButton)
@@ -66,12 +66,83 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
                 print(error!.localizedDescription)
             }
         }
-        
     }
     
-    func saveNote() {
+  
+    //MARK:- TableView Data source methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return recordArr.count
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RecordCellIdentifier")
+        let picIV = cell?.viewWithTag(1) as! UIImageView
+        let titleL = cell?.viewWithTag(2) as! UILabel
+        let subTitleL = cell?.viewWithTag(3) as! UILabel
         
+        let record = recordArr[indexPath.row]
+        titleL.text = record.value(forKey: "noteTitle") as? String
+        subTitleL.text = record.value(forKey: "noteText") as? String
+        let imageAsset : CKAsset = record.value(forKey: "noteImage") as! CKAsset
+        picIV.image = UIImage(contentsOfFile: imageAsset.fileURL.path)
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let recordId : CKRecordID = recordArr[indexPath.row].recordID
+        self.deleteRecordFromiCloud(recordId: recordId) { (isSuccess) in
+            if isSuccess{
+                DispatchQueue.main.async {
+                    self.recordArr.remove(at: indexPath.row)
+                    self.recordTV.deleteRows(at: [indexPath], with: UITableViewRowAnimation.top)
+                }
+            }
+            else
+            {
+                
+            }
+        }
+    }
+    
+    //MARK:- ImagePicker delegat
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+    {
+        print(info)
+        imageIV.image = info["UIImagePickerControllerOriginalImage"] as? UIImage
+        self.saveImage()
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
+    {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK:- Other Private method
+    
+    private func saveImage()
+    {
+        let tempImageName = "Image.jpg"
+        let imageData = UIImageJPEGRepresentation(imageIV.image!, 0.5)
         
+        do {
+            let manager = Foundation.FileManager.default
+            let documents = try manager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            destinationURL = documents.appendingPathComponent(tempImageName)
+            try imageData?.write(to: destinationURL)
+        }
+        catch
+        {
+            print(error)
+        }
+    }
+    
+    func uploadNote() {
         
         let timeStamp = String(format: "%f", NSDate.timeIntervalSinceReferenceDate)
         let identifier = timeStamp.components(separatedBy: ".")
@@ -116,81 +187,5 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
         }
     }
     
-    //MARK:- TableView Data source methods
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recordArr.count
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecordCellIdentifier")
-        let picIV = cell?.viewWithTag(1) as! UIImageView
-        let titleL = cell?.viewWithTag(2) as! UILabel
-        let subTitleL = cell?.viewWithTag(3) as! UILabel
-        
-        let record = recordArr[indexPath.row]
-        titleL.text = record.value(forKey: "noteTitle") as? String
-        subTitleL.text = record.value(forKey: "noteText") as? String
-        let imageAsset : CKAsset = record.value(forKey: "noteImage") as! CKAsset
-        picIV.image = UIImage(contentsOfFile: imageAsset.fileURL.path)
-        return cell!
-    }
-    
-    
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        let recordId : CKRecordID = recordArr[indexPath.row].recordID
-        self.deleteRecordFromiCloud(recordId: recordId) { (isSuccess) in
-            if isSuccess{
-                DispatchQueue.main.async {
-                    self.recordArr.remove(at: indexPath.row)
-                    self.recordTV.deleteRows(at: [indexPath], with: UITableViewRowAnimation.top)
-                }
-            }
-            else
-            {
-                
-            }
-        }
-    }
-    
-    //MARK:- ImagePicker delegat
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
-    {
-        print(info)
-        imageIV.image = info["UIImagePickerControllerOriginalImage"] as? UIImage
-        self.saveImage()
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
-    {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    //MARK:- Other Private method
-    
-    private func saveImage()
-    {
-        let tempImageName = "Image.jpg"
-        let imageData = UIImageJPEGRepresentation(imageIV.image!, 0.8)
-        
-        do {
-            let manager = Foundation.FileManager.default
-            let documents = try manager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            destinationURL = documents.appendingPathComponent(tempImageName)
-            try imageData?.write(to: destinationURL)
-            self.saveNote()
-        }
-        catch
-        {
-            print(error)
-        }
-        
-    }
 }
 

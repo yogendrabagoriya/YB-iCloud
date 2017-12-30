@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,7 +14,7 @@
         <!--Key ValueVC-->
         <scene sceneID="K2V-v5-5Jp">
             <objects>
-                <viewController id="n7k-QP-0TX" customClass="KeyValueVC" customModule="DemoiCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="n7k-QP-0TX" customClass="KeyValueVC" customModule="YB_iCloud" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9I6-bd-nVk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,15 +56,15 @@
             </objects>
             <point key="canvasLocation" x="460" y="-703"/>
         </scene>
-        <!--CloudVC-->
+        <!--Cloud KitVC-->
         <scene sceneID="xWN-7u-RyS">
             <objects>
-                <viewController id="tb0-ds-rAa" customClass="CloudVC" customModule="DemoiCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="tb0-ds-rAa" customClass="CloudKitVC" customModule="YB_iCloud" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7uQ-Y0-Ylb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZf-0T-J0b">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click here to select image from library or camera." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZf-0T-J0b">
                                 <rect key="frame" x="8" y="166" width="359" height="98"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -107,6 +108,7 @@
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="To5-Wn-IDE">
                                                     <rect key="frame" x="8" y="0.0" width="100" height="100"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="100" id="JD3-sx-pnb"/>
                                                         <constraint firstAttribute="width" secondItem="To5-Wn-IDE" secondAttribute="height" multiplier="1:1" id="JZT-tj-0XE"/>
                                                     </constraints>
                                                 </imageView>
@@ -171,6 +173,9 @@
                                     <constraint firstAttribute="height" constant="30" id="h4k-tr-TF9"/>
                                 </constraints>
                                 <state key="normal" title="Upload"/>
+                                <connections>
+                                    <action selector="uploadNoteWithSender:" destination="tb0-ds-rAa" eventType="touchUpInside" id="itA-eQ-pwF"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -239,7 +244,7 @@
         <!--Cloud OptionVC-->
         <scene sceneID="lZL-gt-c6H">
             <objects>
-                <viewController id="lZU-ng-dTV" customClass="CloudOptionVC" customModule="DemoiCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="lZU-ng-dTV" customClass="CloudOptionVC" customModule="YB_iCloud" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="n5A-hs-qXB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -282,7 +287,7 @@
         <!--DocumentVC-->
         <scene sceneID="m4Q-fC-gDX">
             <objects>
-                <viewController id="Nbx-uQ-2Bf" customClass="DocumentVC" customModule="DemoiCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Nbx-uQ-2Bf" customClass="DocumentVC" customModule="YB_iCloud" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cnW-iY-kEE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
