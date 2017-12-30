@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -37,16 +38,18 @@
                         <viewLayoutGuide key="safeArea" id="zlg-4p-SDP"/>
                     </view>
                     <navigationItem key="navigationItem" id="6vU-0V-Zwl">
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="39J-Wj-pQ9">
-                            <connections>
-                                <action selector="refreshBtnActionWithSender:" destination="n7k-QP-0TX" id="a9V-Ps-Jbf"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="GFg-WE-NhM">
-                            <connections>
-                                <action selector="addbtnActionWithSender:" destination="n7k-QP-0TX" id="dr8-yO-Kys"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="GFg-WE-NhM">
+                                <connections>
+                                    <action selector="addbtnActionWithSender:" destination="n7k-QP-0TX" id="dr8-yO-Kys"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="39J-Wj-pQ9">
+                                <connections>
+                                    <action selector="refreshBtnActionWithSender:" destination="n7k-QP-0TX" id="a9V-Ps-Jbf"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tb" destination="zCH-mQ-iL6" id="bNe-7O-dNh"/>
@@ -177,10 +180,15 @@
                                     <action selector="uploadNoteWithSender:" destination="tb0-ds-rAa" eventType="touchUpInside" id="itA-eQ-pwF"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YMS-FK-T2l">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="TZf-0T-J0b" firstAttribute="top" secondItem="yu3-6E-QQF" secondAttribute="top" id="0pI-vx-rHD"/>
+                            <constraint firstItem="YMS-FK-T2l" firstAttribute="centerX" secondItem="7uQ-Y0-Ylb" secondAttribute="centerX" id="1KB-rF-xqD"/>
                             <constraint firstItem="XCG-08-uxh" firstAttribute="leading" secondItem="yFZ-OL-E0w" secondAttribute="leading" constant="8" id="1rR-WI-RwY"/>
                             <constraint firstItem="TZf-0T-J0b" firstAttribute="trailing" secondItem="yu3-6E-QQF" secondAttribute="trailing" id="2zI-bs-HG5"/>
                             <constraint firstItem="i2i-bs-QPV" firstAttribute="trailing" secondItem="yFZ-OL-E0w" secondAttribute="trailing" id="7VP-9a-p8u"/>
@@ -209,12 +217,14 @@
                             <constraint firstItem="TZf-0T-J0b" firstAttribute="leading" secondItem="yu3-6E-QQF" secondAttribute="leading" id="vff-F3-QXu"/>
                             <constraint firstItem="yFZ-OL-E0w" firstAttribute="trailing" secondItem="XCG-08-uxh" secondAttribute="trailing" constant="8" id="wdl-Ap-MWw"/>
                             <constraint firstItem="yFZ-OL-E0w" firstAttribute="trailing" secondItem="JBN-d7-xDc" secondAttribute="trailing" constant="8" id="xpn-ax-Az9"/>
+                            <constraint firstItem="YMS-FK-T2l" firstAttribute="centerY" secondItem="7uQ-Y0-Ylb" secondAttribute="centerY" id="zGX-sA-1tF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yFZ-OL-E0w"/>
                     </view>
                     <connections>
                         <outlet property="descriptionTV" destination="JBN-d7-xDc" id="uC6-tI-cpR"/>
                         <outlet property="imageIV" destination="yu3-6E-QQF" id="8wO-Af-8aF"/>
+                        <outlet property="progressVire" destination="YMS-FK-T2l" id="Bqv-1e-ULp"/>
                         <outlet property="recordTV" destination="i2i-bs-QPV" id="shO-Ze-Er5"/>
                         <outlet property="titleTF" destination="XCG-08-uxh" id="DqM-hh-nGk"/>
                     </connections>

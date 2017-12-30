@@ -12,9 +12,10 @@ import UIKit
 class CloudOptionVC : UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     
-    let optionArr = ["Key-Value", "iCloud Document", "Cloud Kit"]
+    let optionArr = ["Key-Value", "Cloud Kit"] // "iCloud Document",
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.automaticallyAdjustsScrollViewInsets = false
     }
     
     //MARK:- TableView data source
@@ -35,10 +36,10 @@ class CloudOptionVC : UIViewController, UITableViewDataSource, UITableViewDelega
         case 0:
             self.performSegue(withIdentifier: "KeyValueSegue", sender: nil)
             break
+//        case 1:
+//            self.performSegue(withIdentifier: "DocumentSegue", sender: nil)
+//            break
         case 1:
-            self.performSegue(withIdentifier: "DocumentSegue", sender: nil)
-            break
-        case 2:
             self.performSegue(withIdentifier: "CloudSegue", sender: nil)
             break
         default:

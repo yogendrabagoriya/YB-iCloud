@@ -16,6 +16,7 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
     @IBOutlet weak var recordTV : UITableView!
     @IBOutlet weak var titleTF : UITextField!
     @IBOutlet weak var descriptionTV : UITextView!
+    @IBOutlet weak var progressVire : UIActivityIndicatorView!
     
     var recordArr : Array<CKRecord>!
     
@@ -44,20 +45,26 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     @IBAction func uploadNote(sender : UIButton)
     {
+        self.showHideProgress(isShow: true)
         self.uploadNote()
     }
     
     @IBAction func getNoteRecord(sender : UIButton)
     {
+        DispatchQueue.main.async {
+            self.showHideProgress(isShow: true)
+        }
         let container = CKContainer.default()
         let privateDB = container.privateCloudDatabase
         
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "Notes", predicate: predicate)
+        
         privateDB.perform(query, inZoneWith: nil) { (recordArr, error) in
             if error == nil{
                 self.recordArr = recordArr
                 DispatchQueue.main.async {
+                    self.showHideProgress(isShow: false)
                     self.recordTV.reloadData()
                 }
             }
@@ -160,13 +167,20 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
         let container = CKContainer.default()
         let privaeDB = container.privateCloudDatabase
         privaeDB.save(record) { (record, error) in
-            if error != nil
-            {
-                print(error?.localizedDescription ?? "Error is exist")
+            DispatchQueue.main.async {
+                self.showHideProgress(isShow: false)
+                if error != nil
+                {
+                    print(error?.localizedDescription ?? "Error is exist")
+                }
+                else{
+                    self.titleTF.text = ""
+                    self.descriptionTV.text = ""
+                    self.imageIV.image = UIImage(named: "")
+                    print(record?.description ?? "Record uploaded Successfully")
+                }
             }
-            else{
-                print(record?.description ?? "No record description")
-            }
+            
         }
     }
     
@@ -176,6 +190,9 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
         let privateDB : CKDatabase = container.privateCloudDatabase
         
         privateDB.delete(withRecordID: recordId) { (recordID, error) in
+            DispatchQueue.main.async {
+                self.showHideProgress(isShow: false)
+            }
             if error == nil
             {
                 complitionHandler(true)
@@ -184,6 +201,20 @@ class CloudKitVC : UIViewController, UIImagePickerControllerDelegate, UINavigati
             {
                 complitionHandler(false)
             }
+        }
+    }
+    
+    func showHideProgress(isShow : Bool)
+    {
+        if isShow
+        {
+            self.progressVire.startAnimating()
+            self.view.isUserInteractionEnabled = false
+        }
+        else
+        {
+            self.progressVire.stopAnimating()
+            self.view.isUserInteractionEnabled = true
         }
     }
     

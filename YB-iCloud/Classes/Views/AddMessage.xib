@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,14 +29,16 @@
                             <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9a-nu-kib">
-                            <rect key="frame" x="8" y="124" width="124" height="30"/>
+                            <rect key="frame" x="8" y="124" width="130" height="30"/>
+                            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" title="Save"/>
                             <connections>
                                 <action selector="addBtnActionWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="IvU-3d-wWo"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7Q-23-Wf4">
-                            <rect key="frame" x="152" y="124" width="124" height="30"/>
+                            <rect key="frame" x="146" y="124" width="130" height="30"/>
+                            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" title="Cancel"/>
                             <connections>
                                 <action selector="cancelBtnActionWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="5we-D7-e8P"/>
@@ -47,7 +50,7 @@
                         <constraint firstAttribute="trailing" secondItem="WXu-ZB-qVI" secondAttribute="trailing" constant="8" id="0Sj-cW-ous"/>
                         <constraint firstItem="U9a-nu-kib" firstAttribute="width" secondItem="k7Q-23-Wf4" secondAttribute="width" id="0z6-3Q-umk"/>
                         <constraint firstAttribute="height" constant="162" id="6WX-Xd-hys"/>
-                        <constraint firstItem="k7Q-23-Wf4" firstAttribute="leading" secondItem="U9a-nu-kib" secondAttribute="trailing" constant="20" id="Bvs-iQ-vlR"/>
+                        <constraint firstItem="k7Q-23-Wf4" firstAttribute="leading" secondItem="U9a-nu-kib" secondAttribute="trailing" constant="8" id="Bvs-iQ-vlR"/>
                         <constraint firstAttribute="bottom" secondItem="U9a-nu-kib" secondAttribute="bottom" constant="8" id="DC6-gZ-mgO"/>
                         <constraint firstItem="WXu-ZB-qVI" firstAttribute="top" secondItem="WfM-VY-bAc" secondAttribute="top" constant="18" id="EHm-Jh-JQA"/>
                         <constraint firstAttribute="trailing" secondItem="k7Q-23-Wf4" secondAttribute="trailing" constant="8" id="QQu-sR-her"/>

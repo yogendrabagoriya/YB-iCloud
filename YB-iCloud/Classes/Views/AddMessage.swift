@@ -24,6 +24,7 @@ class AddMessage : UIView {
     @IBAction func addBtnAction(sender : UIButton)
     {
         self.addBtnActionDelegate(messageTF.text!)
+        self.messageTF.text = ""
     }
 
     @IBAction func cancelBtnAction(sender : UIButton)

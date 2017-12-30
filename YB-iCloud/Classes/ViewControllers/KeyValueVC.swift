@@ -15,8 +15,9 @@ class KeyValueVC : UIViewController, UITableViewDataSource {
     @IBOutlet weak var tb : UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.automaticallyAdjustsScrollViewInsets = false
         // Do any additional setup after loading the view, typically from a nib.
-        self.doSome()
+        self.addObservers()
     }
     
     @IBAction func addbtnAction(sender : UIBarButtonItem)
@@ -31,8 +32,8 @@ class KeyValueVC : UIViewController, UITableViewDataSource {
         }
         self.view.addSubview(view)
     }
-    
-    func doSome()
+    //MARK:- Other private method
+    private func addObservers()
     {
         let store = NSUbiquitousKeyValueStore.default
         NotificationCenter.default.addObserver(self, selector: #selector(storeModified), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: store)
@@ -41,6 +42,9 @@ class KeyValueVC : UIViewController, UITableViewDataSource {
     @objc func storeModified()
     {
         dataArr = NSUbiquitousKeyValueStore.default.array(forKey: "AVAILABLE_NOTES") as! Array<String>
+        DispatchQueue.main.async {
+            self.tb.reloadData()
+        }
     }
     
     
